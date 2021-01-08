@@ -1,0 +1,27 @@
+version: "3"
+services:
+  backend:
+    restart: always
+    container_name: textonomy_backend_dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    expose:
+      - 80
+    entrypoint: /start-reload.sh
+
+  frontend:
+    container_name: textonomy_frontend_dev
+    stdin_open: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8889:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
