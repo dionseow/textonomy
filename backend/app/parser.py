@@ -1,9 +1,9 @@
 import re
 
 def _sub_entities(entity_lst):
-    entity_dic = {'<B-PER>': "<span class='label label-primary'>{}</span>",
-                  '<B-LOC>': "<span class='label label-success'>{}</span>",
-                  '<B-ORG>': "<span class='label label-warning'>{}</span>"}
+    entity_dic = {'<B-PER>': "<person class='label'>{}</person>",
+                  '<B-LOC>': "<loc class='label'>{}</loc>",
+                  '<B-ORG>': "<org class='label'>{}</org>"}
     # not multiple words entity
     if len(entity_lst) == 1:
         curr_format = (' ').join(entity_lst[0][:2])

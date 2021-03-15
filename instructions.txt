@@ -1,0 +1,7 @@
+1. Setup default elasticsearch on port 9200
+2. Go into frontend and run npm start
+3. Go into backend and setup database (flask db init, flask db migrate, flask db upgrade)
+4. Run save_articles to save articles into dataframe then translate the articles separately
+5. Run upload_articles to upload the articles into the database
+6. Go to translate service and run python server.py --ip "0.0.0.0" --port 5001 --url_root "/translator" --config "./available_models/conf.json" to setup translate server
+7. Finally run flask run to run backend server

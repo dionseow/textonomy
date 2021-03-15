@@ -18,6 +18,7 @@ def clean_entity(entity):
     entity = re.sub('\(', '', entity)
     entity = re.sub('-', ' ', entity)
     entity = re.sub('\[', '' , entity)
+    entity = re.sub('"', '' , entity)
     entity = re.sub('\]', '' , entity)
     entity = re.sub("'", '' , entity)
     entity = re.sub(':', '', entity)

@@ -4,8 +4,8 @@ from app.search import add_to_index, remove_from_index, query_index
 
 class SearchableMixin(object):
     @classmethod
-    def search(cls, expression, page, per_page):
-        ids, total = query_index(cls.__tablename__, expression, page, per_page)
+    def search(cls, expression):
+        ids, total = query_index(cls.__tablename__, expression)
         if total == 0:
             return cls.query.filter_by(id=0), 0
         when = []
@@ -48,7 +48,9 @@ class Article(SearchableMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     language = db.Column(db.String(64))
-    body = db.Column(db.String(3000))
+    body = db.Column(db.String(5000))
+    translated_body = db.Column(db.String(5000))
+    summary = db.Column(db.String(5000))
     entities = db.relationship('Entity', backref='origin', lazy='dynamic')
     def __repr__(self):
         return f'<Article {self.title}>'

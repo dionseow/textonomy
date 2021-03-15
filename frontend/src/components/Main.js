@@ -6,26 +6,36 @@ import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import Index from './Index.js';
+import Index from './main/Index.js';
+import Article from './Article.js';
+import Entity from './Entity.js';
+import Trends from './Trends.js';
+import Upload from './Upload.js';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
         dionseow
-      </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -157,12 +167,51 @@ export default function Textonomy() {
           </IconButton>
         </div>
         <Divider />
+        <List>
+          <ListItem button component={ Link } to="/">
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button component={ Link } to="/upload">
+            <ListItemIcon>
+              <CloudUploadIcon />
+            </ListItemIcon>
+            <ListItemText primary="Upload" />
+          </ListItem>
+          <ListItem button component={ Link } to="/trends">
+            <ListItemIcon>
+              <TrendingUpIcon />
+            </ListItemIcon>
+            <ListItemText primary="<WIP> Trends" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <HelpOutlineIcon />
+            </ListItemIcon>
+            <ListItemText secondary="Help" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <FeedbackIcon />
+            </ListItemIcon>
+            <ListItemText secondary="Feedback" />
+          </ListItem>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Route path="/" exact component={Index} />
+            <Route path="/articles/:id" component={Article} />
+            <Route path="/entities/:id" component={Entity} />
+            <Route path="/trends" component={Trends} />
+            <Route path="/upload" component={Upload} />
           </Grid>
           <Box pt={4}>
             <Copyright />

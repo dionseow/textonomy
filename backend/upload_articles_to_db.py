@@ -5,38 +5,27 @@ import pandas as pd
 import os
 import json
 import re
+import requests
 
-indon_articles = pd.read_csv(os.path.join(os.getcwd(), 'data/predicted_indon_wiki.csv'))
-malay_articles = pd.read_csv(os.path.join(os.getcwd(), 'data/predicted_malay_wiki.csv'))
+processed_articles = pd.read_csv("processed_translated_articles.csv")
+processed_articles['translated_body'] = processed_articles['translated_body'].astype(str)
 
 # upload articles into sqlite
 with app.app_context():
-    for index, row in indon_articles.iterrows():
+    for index, row in processed_articles.iterrows():
         print(index)
-        parsed_article, parsed_entities = parse_entities(row['article'])
+        entities = eval(row['entities'])
         article = Article(title=row['title'],
-                          language='ID',
-                          body=parsed_article)
+                          language=row['language'],
+                          body=row['body'],
+                          translated_body=row['translated_body'],
+                          summary=row['summarized_body'])
         db.session.add(article)
         db.session.commit()
-        for key,ent_lst in parsed_entities.items():
+        for key,ent_lst in entities.items():
             ent_lst = list(set(ent_lst))
             for ent_name in ent_lst:
                 ent = Entity(name=ent_name, type=key, origin=article)
                 db.session.add(ent)
                 db.session.commit()
 
-    for index, row in malay_articles.iterrows():
-        print(index)
-        parsed_article, parsed_entities = parse_entities(row['article'])
-        article = Article(title=row['title'],
-                          language='MS',
-                          body=parsed_article)
-        db.session.add(article)
-        db.session.commit()
-        for key,ent_lst in parsed_entities.items():
-            ent_lst = list(set(ent_lst))
-            for ent_name in ent_lst:
-                ent = Entity(name=ent_name, type=key, origin=article)
-                db.session.add(ent)
-                db.session.commit()
